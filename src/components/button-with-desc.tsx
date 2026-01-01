@@ -14,7 +14,7 @@ export default function ButtonWithDesc({
   return (
     <span className="relative">
       <Link
-        className="p-3 rounded-2xl font-semibold text-lg text-center flex items-center justify-center self-center bg-accent light:text-card-foreground w-3xs h-16 z-50"
+        className="p-3 rounded-2xl font-semibold text-lg text-center flex items-center justify-center self-center bg-accent text-accent-foreground dark:text-card-foreground w-3xs h-16 z-50"
         {...rest}
       >
         {text}
