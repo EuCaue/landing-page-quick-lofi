@@ -1,12 +1,13 @@
 import ButtonWithDesc from "@/components/button-with-desc";
 import Hero from "@/components/hero";
 
-//  TODO: mobile friendly
 export default function Intro() {
   return (
     <Hero className="gap-8">
-      <h1 className="font-bold text-5xl">Sound. Focus. No distractions.</h1>
-      <h2 className="font-semibold text-2xl">
+      <h1 className="font-bold text-5xl p-3 lg:p-0">
+        Sound. Focus. No distractions.
+      </h1>
+      <h2 className="font-semibold text-2xl p-3 lg:p-0">
         Seamlessly integrated with your GNOME desktop. Just click and listen.
       </h2>
       <ButtonWithDesc

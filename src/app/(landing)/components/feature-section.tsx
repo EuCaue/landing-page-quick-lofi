@@ -41,7 +41,7 @@ export default function FeatureSection() {
   if (!resolvedTheme) return null;
 
   return (
-    <Hero className="gap-8 flex-row">
+    <Hero className="gap-8 lg:flex-row flex-col-reverse" id="feature-section">
       <Carousel
         setApi={setCarouselAPI}
         opts={{
@@ -52,7 +52,7 @@ export default function FeatureSection() {
         <CarouselContent>
           {carouselData.map(({ image, text }, index) => (
             <CarouselItem key={index} className="w-full">
-              <div className="p-1">
+              <div className="p-4 lg:p-1">
                 <Card>
                   <CardContent
                     className="flex aspect-square items-center justify-center p-3 basis-1/2"
@@ -74,7 +74,7 @@ export default function FeatureSection() {
       </Carousel>
       <span className="flex flex-col gap-4 items-center justify-center self-center">
         <h1 className="font-bold text-xl">Minimal and customizable.</h1>
-        <h2 className="font-semibold text-lg">
+        <h2 className="font-semibold text-lg text-center lg:text-start">
           A lightweight sound player for GNOME built to keep you focused.
         </h2>
         <ul className="gap-8 flex items-center justify-center self-center flex-col mt-8 list-disc">
