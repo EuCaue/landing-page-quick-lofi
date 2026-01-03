@@ -18,7 +18,7 @@ type TestimonialProps = {
 function Testimonial({ name, msg }: TestimonialProps) {
   const url = `https://extensions.gnome.org/accounts/profile/${name}`;
   return (
-    <Card className="w-[98vw] flex items-center justify-center lg:h-80">
+    <Card className="flex items-center justify-center lg:h-80 size-full">
       <CardHeader className="size-full flex items-end justify-center p-3">
         <CardTitle className="font-bold text-xl w-full text-center lg:h-27.25">
           {msg}
@@ -74,7 +74,7 @@ export default function Testimonials() {
     },
   ];
   return (
-    <Hero id="testimonials" className="lg:flex-row items-center gap-3 lg:p-3">
+    <Hero id="testimonials" className="lg:flex-row items-center gap-3 p-3">
       {testimonialsData.map(({ name, msg }) => {
         return <Testimonial key={name} name={name} msg={msg} />;
       })}
