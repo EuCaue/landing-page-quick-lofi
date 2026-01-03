@@ -4,10 +4,10 @@ import Hero from "@/components/hero";
 export default function Intro() {
   return (
     <Hero className="gap-8">
-      <h1 className="font-bold text-5xl p-3 lg:p-0">
+      <h1 className="font-bold text-5xl p-3 lg:p-0 text-center lg:text-start">
         Sound. Focus. No distractions.
       </h1>
-      <h2 className="font-semibold text-2xl p-3 lg:p-0">
+      <h2 className="font-semibold text-2xl p-3 lg:p-0 text-center lg:text-start">
         Seamlessly integrated with your GNOME desktop. Just click and listen.
       </h2>
       <ButtonWithDesc

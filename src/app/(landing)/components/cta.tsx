@@ -4,10 +4,10 @@ import Hero from "@/components/hero";
 export default function CTA() {
   return (
     <Hero className="gap-10">
-      <h1 className="font-bold text-5xl p-3 lg:p-0">
+      <h1 className="font-bold text-5xl p-3 lg:p-0 text-center lg:text-start">
         Listen without distractions on GNOME.
       </h1>
-      <h2 className="font-semibold text-2xl p-3 lg:p-0">
+      <h2 className="font-semibold text-2xl p-3 lg:p-0 text-center lg:text-start">
         Start playing lofi and ambient sounds in seconds. No setup. No
         distractions.
       </h2>
