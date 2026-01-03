@@ -1,17 +1,24 @@
-import { cn } from "@/lib/utils";
+"use client";
 
-export type HeroProps = React.ComponentProps<"div">;
+import { cn } from "@/lib/utils";
+import { motion, HTMLMotionProps } from "motion/react";
+
+export type HeroProps = HTMLMotionProps<"div">;
 
 export default function Hero({ children, className, ...rest }: HeroProps) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 75 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-30%" }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
       {...rest}
       className={cn(
-        "min-h-screen min-w-screen flex items-center justify-center flex-col",
+        "min-h-screen w-full flex items-center justify-center flex-col",
         className,
       )}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
