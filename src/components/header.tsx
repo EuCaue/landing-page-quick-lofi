@@ -120,7 +120,7 @@ export default function Header() {
   return (
     <header
       className="
-        sticky top-0 z-10
+        sticky top-0 z-50
         w-full
         flex items-center gap-4
         p-4

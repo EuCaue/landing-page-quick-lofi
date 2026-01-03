@@ -27,7 +27,7 @@ export default function ButtonWithDesc({
         {text}
       </Link>
       <div
-        className="rounded-bl-2xl rounded-br-2xl font-semibold text-sm bg-card w-3xs h-12 flex items-center justify-center p-3 absolute top-[86%]  self-center z-50 text-center"
+        className="rounded-bl-2xl rounded-br-2xl font-semibold text-sm bg-card w-3xs h-12 flex items-center justify-center p-3 absolute top-[86%]  self-center z-40 text-center"
         title={desc}
       >
         {desc}
