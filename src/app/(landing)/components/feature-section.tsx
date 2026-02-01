@@ -61,7 +61,7 @@ export default function FeatureSection() {
                     <Image
                       src={`${image}-${resolvedTheme}.png`}
                       alt={text}
-                      className="w-full h-full"
+                      className="size-full"
                       height={1920}
                       width={1080}
                     />
