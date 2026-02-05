@@ -45,21 +45,21 @@ Just sound and focus.
 
 The extension source code, issues and feature requests live here:
 
-<center>
+<div align="center">
 
 [![GitHub Repo](https://img.shields.io/badge/QuickLofi-Repository-181717?logo=github&logoColor=white&style=for-the-badge)](https://github.com/EuCaue/quick-lofi)
 
-</center>
+</div>
 
 ## Support
 
 If Quick Lofi helps you focus, consider supporting the project:
 
-<center>
+<div align="center">
 
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5f5f?logo=kofi&logoColor=white&style=for-the-badge)](https://ko-fi.com/eucaue)
 
-</center>
+</div>
 
 <small>
   <div align="center">
