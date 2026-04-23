@@ -5,12 +5,12 @@ import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/footer";
 
-const geistSans = Inter({
+const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = JetBrains_Mono({
+const jetBrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
 });
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
