@@ -1,15 +1,21 @@
-import CTA from "./components/cta";
-import FeatureSection from "./components/feature-section";
-import Intro from "./components/intro";
-import Testimonials from "./components/testimonials";
+import { Hero } from "@/components/sections/hero";
+import { Features } from "@/components/sections/features";
+import { Screenshots } from "@/components/sections/screenshots";
+import { Install } from "@/components/sections/install";
+import { Reviews } from "@/components/sections/reviews";
+import { About } from "@/components/sections/about";
+import { StructuredData } from "@/components/structured-data";
 
 export default function Home() {
   return (
-    <main className="">
-      <Intro />
-      <FeatureSection />
-      <Testimonials />
-      <CTA />
-    </main>
+    <>
+      <StructuredData />
+      <Hero />
+      <Features />
+      <Screenshots />
+      <Install />
+      <Reviews />
+      <About />
+    </>
   );
 }

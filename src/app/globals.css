@@ -1,120 +1,339 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Theme is a class on <html> (next-themes); accent is data-accent on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Tokens follow the Libadwaita 1.6+ palette and its 6px spacing grid.
+ * Tailwind's spacing unit is set to 6px, so p-1 = 6px, p-2 = 12px, p-4 = 24px.
+ */
+/* Font variables come from next/font classes on <html>. */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cantarell), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --spacing: 0.375rem;
 
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
+  --color-window: var(--window-bg);
+  --color-view: var(--view-bg);
+  --color-headerbar: var(--headerbar-bg);
+  --color-sidebar: var(--sidebar-bg);
+  --color-card: var(--card-bg);
+  --color-popover: var(--popover-bg);
+  --color-fg: var(--window-fg);
+  --color-dim: var(--dim-fg);
+  --color-border: var(--border-color);
+  --color-shade: var(--shade-color);
+  --color-hover: var(--hover-bg);
+  --color-active: var(--active-bg);
+  --color-accent: var(--accent-color);
+  --color-accent-bg: var(--accent-bg-strong);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-desktop: var(--desktop-bg);
+  --color-shell: var(--shell-bg);
+  --color-shell-fg: var(--shell-fg);
+  --color-shell-menu: var(--shell-menu-bg);
 
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
+  --radius-button: 6px;
+  --radius-card: 12px;
+  --radius-window: 15px;
 
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  /* GNOME-like radius scale */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
-  /* GNOME spacing base */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 18px;
-  --spacing-xl: 24px;
+  color-scheme: light;
 
-  /* Window */
-  --background: oklch(0.98 0 0);
-  --foreground: oklch(0.25 0.01 277);
+  --window-bg: #fafafb;
+  --window-fg: rgb(0 0 6 / 80%);
+  --dim-fg: rgb(0 0 6 / 62%);
+  --view-bg: #ffffff;
+  --headerbar-bg: #ffffff;
+  --sidebar-bg: #ebebed;
+  --card-bg: #ffffff;
+  --popover-bg: #ffffff;
+  --border-color: rgb(0 0 6 / 12%);
+  --shade-color: rgb(0 0 6 / 7%);
+  --hover-bg: rgb(0 0 6 / 7%);
+  --active-bg: rgb(0 0 6 / 14%);
+  --card-shadow:
+    0 0 0 1px rgb(0 0 6 / 3%), 0 1px 3px 1px rgb(0 0 6 / 7%),
+    0 2px 6px 2px rgb(0 0 6 / 3%);
+  --popover-shadow:
+    0 0 0 1px rgb(0 0 6 / 8%), 0 4px 12px 2px rgb(0 0 6 / 12%),
+    0 12px 32px 4px rgb(0 0 6 / 8%);
 
-  /* Header bar */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.01 277);
+  /* GNOME Shell surfaces. The top bar stays black in both styles. */
+  --shell-bg: #000000;
+  --shell-fg: #ffffff;
+  --shell-menu-bg: #ffffff;
+  --shell-menu-fg: rgb(0 0 6 / 85%);
 
-  /* View */
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.01 277);
-
-  /* Accent GNOME blue */
-  --primary: oklch(0.63 0.19 257);
-  --primary-foreground: oklch(0.99 0 0);
-
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.32 0 0);
-
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.55 0 0);
-
-  --accent: oklch(0.63 0.19 257);
-  --accent-foreground: oklch(0.99 0 0);
-
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.63 0.19 257);
+  /* Accent: GNOME 47 accent palette. Quick Lofi defaults to teal. */
+  --accent-bg: #2190a4;
+  --accent-fg: #ffffff;
+  --accent-bg-strong: #1a7486;
+  --accent-color: #136677;
+  --accent-soft: #dceef1;
+  /* Solid desktop background behind the shell preview. */
+  --desktop-bg: #1a7080;
 }
 
 .dark {
-  /* Window */
-  --background: oklch(0.23 0.01 277);
-  --foreground: oklch(0.98 0 0);
+  color-scheme: dark;
 
-  /* Header bar */
-  --card: oklch(0.3 0.01 277);
-  --card-foreground: oklch(0.98 0 0);
+  --window-bg: #222226;
+  --window-fg: #ffffff;
+  --dim-fg: rgb(255 255 255 / 66%);
+  --view-bg: #1d1d20;
+  --headerbar-bg: #2e2e32;
+  --sidebar-bg: #2e2e32;
+  --card-bg: rgb(255 255 255 / 8%);
+  --popover-bg: #36363a;
+  --border-color: rgb(255 255 255 / 12%);
+  --shade-color: rgb(0 0 6 / 36%);
+  --hover-bg: rgb(255 255 255 / 7%);
+  --active-bg: rgb(255 255 255 / 16%);
+  --card-shadow: 0 0 0 1px rgb(0 0 6 / 9%), 0 1px 3px 1px rgb(0 0 6 / 20%);
+  --popover-shadow:
+    0 0 0 1px rgb(255 255 255 / 6%), 0 4px 12px 2px rgb(0 0 6 / 40%),
+    0 12px 32px 4px rgb(0 0 6 / 30%);
 
-  /* View */
-  --popover: oklch(0.19 0.01 277);
-  --popover-foreground: oklch(0.98 0 0);
+  --shell-menu-bg: #36363a;
+  --shell-menu-fg: #ffffff;
 
-  /* Accent GNOME blue */
-  --primary: oklch(0.7 0.18 257);
-  --primary-foreground: oklch(0.19 0.01 277);
+  --accent-color: #7fcfdf;
+  --accent-soft: #23434b;
+  --desktop-bg: #18434c;
+}
 
-  --secondary: oklch(0.3 0 0);
-  --secondary-foreground: oklch(0.98 0 0);
+[data-accent="blue"] { --accent-bg: #3584e4; }
+[data-accent="teal"] { --accent-bg: #2190a4; }
+[data-accent="green"] { --accent-bg: #3a944a; }
+[data-accent="yellow"] { --accent-bg: #c88800; }
+[data-accent="orange"] { --accent-bg: #ed5b00; }
+[data-accent="red"] { --accent-bg: #e62d42; }
+[data-accent="pink"] { --accent-bg: #d56199; }
+[data-accent="purple"] { --accent-bg: #9141ac; }
+[data-accent="slate"] { --accent-bg: #6f8396; }
 
-  --muted: oklch(0.3 0 0);
-  --muted-foreground: oklch(0.7 0 0);
+/*
+ * Same approach as Libadwaita: derive readable accent shades from the accent
+ * background. Buttons cap lightness so white labels keep 4.5:1.
+ */
+/*
+ * Kept inside @supports blocks: Lightning CSS rewrites color-mix() with var()
+ * arguments in plain custom property declarations.
+ */
+@supports (color: color-mix(in oklab, red, blue)) {
+  :root {
+    --accent-soft: color-mix(in oklab, var(--accent-bg) 14%, var(--window-bg));
+    --desktop-bg: color-mix(in oklab, var(--accent-bg) 78%, #000);
+  }
+  .dark {
+    --accent-soft: color-mix(in oklab, var(--accent-bg) 22%, var(--window-bg));
+    --desktop-bg: color-mix(in oklab, var(--accent-bg) 45%, #101014);
+  }
+}
 
-  --accent: oklch(0.7 0.18 257);
-  --accent-foreground: oklch(0.19 0.01 277);
-
-  --border: oklch(1 0 0 / 14%);
-  --input: oklch(1 0 0 / 18%);
-  --ring: oklch(0.7 0.18 257);
+@supports (color: oklch(from red l c h)) {
+  :root {
+    --accent-bg-strong: oklch(from var(--accent-bg) min(l, 0.52) c h);
+    --accent-color: oklch(from var(--accent-bg) min(l, 0.48) c h);
+  }
+  .dark {
+    --accent-color: oklch(from var(--accent-bg) max(l, 0.82) min(c, 0.12) h);
+  }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border-color);
   }
 
   html {
-    background: var(--background);
+    background: var(--window-bg);
+    scroll-padding-top: 72px;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
-    @apply bg-background text-foreground;
+    background: var(--window-bg);
+    color: var(--window-fg);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent-bg) 35%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--accent-bg) 70%, transparent);
+    outline-offset: 2px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  code,
+  kbd,
+  pre {
+    font-family: var(--font-mono);
+  }
+
+  /* Popovers opened with the native popover API. */
+  [popover] {
+    color: inherit;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  html {
+    scrollbar-color: color-mix(in oklab, var(--window-fg) 30%, transparent) transparent;
+  }
+}
+
+/* Type scale modeled on Libadwaita style classes. */
+@utility title-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.375rem, 1.75rem + 2.2vw, 3.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+@utility title-1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.875rem, 1.5rem + 1.4vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@utility title-2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+@utility heading {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+@utility body-lg {
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+@utility caption {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+@utility numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility boxed-list {
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow);
+}
+
+@utility page-container {
+  width: 100%;
+  max-width: 1176px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 48rem) {
+    padding-inline: 30px;
+  }
+}
+
+/* GNOME Shell slider: thin track, accent fill, white knob. */
+.shell-slider {
+  appearance: none;
+  height: 18px;
+  background: transparent;
+  cursor: pointer;
+}
+.shell-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--accent-bg) var(--value, 50%),
+    var(--active-bg) var(--value, 50%)
+  );
+}
+.shell-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--active-bg);
+}
+.shell-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+}
+.shell-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(0 0 6 / 12%), 0 2px 4px rgb(0 0 6 / 25%);
+}
+.shell-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(0 0 6 / 12%), 0 2px 4px rgb(0 0 6 / 25%);
+}
+.shell-slider:focus-visible {
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-popover-in {
+    animation: popover-in 220ms var(--ease-out-expo) both;
   }
 }
