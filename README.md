@@ -9,9 +9,12 @@ a GNOME Shell extension to listen to lofi and ambient sounds.
 
 One click. No clutter. Just focus.
 
+**[landing-page-quick-lofi.vercel.app](https://landing-page-quick-lofi.vercel.app)**
+
 [![GitHub stars](https://img.shields.io/github/stars/EuCaue/quick-lofi?style=for-the-badge&logo=github)](https://github.com/EuCaue/quick-lofi)
 [![GNOME Extension](https://img.shields.io/badge/GNOME-Extension-blue?style=for-the-badge&logo=gnome)](https://extensions.gnome.org/extension/6904/quick-lofi/)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5f5f?logo=kofi&logoColor=white&style=for-the-badge)](https://ko-fi.com/eucaue)
+[![Landing Page](https://img.shields.io/badge/Landing%20Page-Visit-2190a4?style=for-the-badge&logo=vercel&logoColor=white)](https://landing-page-quick-lofi.vercel.app)
 
 ![GNOME Supported Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FEuCaue%2Fgnome-shell-extension-quick-lofi%2Fraw%2Fmaster%2Fsrc%2Fmetadata.json&query=%24%5B'shell-version'%5D&style=for-the-badge&logo=gnome&label=Compatible%20with%20GNOME)
 
@@ -40,6 +43,19 @@ Just sound and focus.
 • Keyboard shortcuts  
 • Drag and drop stations  
 • Adjustable pop up size
+
+## Development
+
+Requires [Bun](https://bun.sh).
+
+```bash
+bun install
+bun run dev          # http://localhost:3000
+bun run storybook    # http://localhost:6006
+bun run check        # lint, typecheck, Storybook tests and production build
+```
+
+Page copy and facts live in `src/content/site.ts`. Design tokens and decisions are documented in `DESIGN.md`.
 
 ## Open source
 
