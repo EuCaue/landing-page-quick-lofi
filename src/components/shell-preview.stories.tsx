@@ -44,6 +44,7 @@ export const PlayPauseStop: Story = {
 
     await userEvent.click(canvas.getByRole("button", { name: "Next" }));
     await expect(canvas.getByRole("button", { name: "Pause Lofi Hunter" })).toBeInTheDocument();
+    await expect(canvas.getByText("LIVE")).toBeInTheDocument();
 
     await userEvent.pointer({ keys: "[MouseRight]", target: canvas.getByRole("button", { name: "Pause Lofi Hunter" }) });
     await expect(canvas.queryByText("Now playing:", { exact: false })).not.toBeInTheDocument();
@@ -67,23 +68,30 @@ export const IndicatorTogglesMenu: Story = {
   },
 };
 
-export const RadioWithoutProgress: Story = {
-  args: { initialState: { ...DEFAULT_PREVIEW_STATE, current: 1 } },
+export const LiveStream: Story = {
+  args: { initialState: { ...DEFAULT_PREVIEW_STATE, current: 1, elapsed: 0, paused: true } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.queryByRole("slider", { name: /playback position/i })).not.toBeInTheDocument();
+    await expect(canvas.getByText("LIVE")).toBeInTheDocument();
+    await expect(canvas.getByText("00:00")).toBeInTheDocument();
+    await expect(canvas.getByRole("slider", { name: /live stream/i })).toBeDisabled();
   },
 };
 
 export const PlaylistProgress: Story = {
   args: { initialState: { ...DEFAULT_PREVIEW_STATE, paused: true } },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByText("rain, books and coffee (playlist)")).toBeInTheDocument();
     await expect(canvas.getByText("1:02:30")).toBeInTheDocument();
     const position = canvas.getByRole("slider", { name: /playback position/i });
     fireEvent.change(position, { target: { value: "65" } });
     await expect(canvas.getByText("01:05")).toBeInTheDocument();
+    position.focus();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect(canvas.getByText("01:10")).toBeInTheDocument();
+    await userEvent.keyboard("{PageUp}");
+    await expect(canvas.getByText("01:40")).toBeInTheDocument();
   },
 };
 

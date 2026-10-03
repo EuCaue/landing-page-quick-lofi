@@ -41,23 +41,29 @@ export const SHELL_RANGE = `${RELEASE.shellVersions[0]} to ${RELEASE.shellVersio
 export type Station = {
   name: string;
   source: string;
-  /** Playlists and files show progress and the current item in the mini player. */
-  playlist?: { item: string; durationSeconds: number };
+  /**
+   * Live streams are not seekable: the mini player shows LIVE and a full,
+   * inactive slider. Files and playlists show their duration and can seek.
+   */
+  durationSeconds?: number;
+  /** Media title shown under the station name when it differs from it. */
+  mediaTitle?: string;
 };
 
 /*
- * The first three are the extension defaults. The last two match the
- * mini player capture in public/screenshots/panel-menu-dark.png.
+ * The first three are the extension defaults (live streams). The last two
+ * match the mini player capture in public/screenshots/panel-menu-dark.png.
  */
 export const STATIONS: Station[] = [
   { name: "Lofi Radio", source: "https://play.streamafrica.net/lofiradio" },
   { name: "Lofi Hunter", source: "https://live.hunter.fm/lofi_high" },
   { name: "Lofi Hip-hop", source: "http://hyades.shoutca.st:8043/stream" },
-  { name: "brown noise", source: "~/Music/brown-noise.ogg" },
+  { name: "brown noise", source: "~/Music/brown-noise.ogg", durationSeconds: 3600 },
   {
     name: "rain, books and coffee",
     source: "~/Music/rain-books-and-coffee/",
-    playlist: { item: "rain, books and coffee (playlist)", durationSeconds: 3750 },
+    durationSeconds: 3750,
+    mediaTitle: "rain, books and coffee (playlist)",
   },
 ];
 
@@ -105,7 +111,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
         icon: "applications-multimedia",
         title: "Mini player",
         description:
-          "Previous, play or pause, and next, with playback progress and the track title for playlists.",
+          "Previous, pause, and next, plus elapsed time. Files and playlists get a seek bar and the track title; live streams show LIVE.",
       },
       {
         icon: "audio-volume-high",

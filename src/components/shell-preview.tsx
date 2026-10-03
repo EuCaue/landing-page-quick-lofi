@@ -53,19 +53,27 @@ export function ShellPreview({
   const { open, current, paused, volume, elapsed } = state;
   const playing = current !== null && !paused;
   const station = current !== null ? stations[current] : null;
-  const duration = station?.playlist?.durationSeconds ?? 0;
+  const duration = station?.durationSeconds ?? 0;
+  const seekable = duration > 0;
 
   const set = (patch: Partial<ShellPreviewState>) =>
     setState((s) => ({ ...s, ...patch }));
 
-  /* Advance the playlist clock while something with a duration plays. */
+  /* mpv reports the position while playing, live streams included. */
   useEffect(() => {
-    if (!playing || duration === 0) return;
+    if (!playing) return;
     const id = setInterval(() => {
-      setState((s) => ({ ...s, elapsed: s.elapsed + 1 >= duration ? 0 : s.elapsed + 1 }));
+      setState((s) => ({
+        ...s,
+        elapsed: duration > 0 && s.elapsed + 1 >= duration ? 0 : s.elapsed + 1,
+      }));
     }, 1000);
     return () => clearInterval(id);
   }, [playing, duration]);
+
+  function seekBy(seconds: number) {
+    set({ elapsed: Math.min(duration, Math.max(0, elapsed + seconds)) });
+  }
 
   function activate(index: number) {
     if (index === current) set({ paused: !paused });
@@ -179,9 +187,9 @@ export function ShellPreview({
                 <p aria-live="polite" className="flex w-full flex-col items-center text-center">
                   <span className="sr-only">{paused ? "Paused: " : "Now playing: "}</span>
                   <span className="w-full truncate text-[1rem] font-bold">{station.name}</span>
-                  {station.playlist ? (
-                    <span className="w-full truncate text-[0.8125rem] font-bold">
-                      {station.playlist.item}
+                  {station.mediaTitle && station.mediaTitle !== station.name ? (
+                    <span className="w-full truncate text-[0.8125rem] font-bold opacity-70">
+                      {station.mediaTitle}
                     </span>
                   ) : null}
                 </p>
@@ -194,23 +202,44 @@ export function ShellPreview({
                   />
                   <MiniButton icon="media-skip-forward" label="Next" onClick={() => skip(1)} />
                 </div>
-                {duration > 0 ? (
-                  <label className="flex w-full items-center gap-[9px] py-[6px] text-[0.8125rem]">
-                    <span className="numeric">{formatTime(elapsed)}</span>
-                    <span className="sr-only">Playback position</span>
-                    <input
-                      type="range"
-                      min={0}
-                      max={duration}
-                      value={elapsed}
-                      onChange={(e) => set({ elapsed: Number(e.target.value) })}
-                      aria-valuetext={`${formatTime(elapsed)} of ${formatTime(duration)}`}
-                      className="shell-slider min-w-0 flex-1"
-                      style={{ "--value": `${(elapsed / duration) * 100}%` } as React.CSSProperties}
-                    />
-                    <span className="numeric">{formatTime(duration)}</span>
-                  </label>
-                ) : null}
+                <label className="flex w-full items-center gap-[9px] py-[6px] text-[0.8125rem]">
+                  <span className="numeric">{formatTime(elapsed)}</span>
+                  <span className="sr-only">
+                    {seekable ? "Playback position" : "Playback position, live stream"}
+                  </span>
+                  <input
+                    type="range"
+                    min={0}
+                    max={seekable ? duration : 1}
+                    value={seekable ? elapsed : 1}
+                    disabled={!seekable}
+                    onChange={(e) => set({ elapsed: Number(e.target.value) })}
+                    onKeyDown={(e) => {
+                      if (!seekable) return;
+                      /* Same steps as the extension: arrows 5s, Page Up/Down 30s. */
+                      const steps: Record<string, number> = {
+                        ArrowRight: 5,
+                        ArrowUp: 5,
+                        ArrowLeft: -5,
+                        ArrowDown: -5,
+                        PageUp: 30,
+                        PageDown: -30,
+                      };
+                      if (e.key in steps) {
+                        e.preventDefault();
+                        seekBy(steps[e.key]);
+                      }
+                    }}
+                    aria-valuetext={
+                      seekable ? `${formatTime(elapsed)} of ${formatTime(duration)}` : "Live"
+                    }
+                    className="shell-slider min-w-0 flex-1 disabled:cursor-default"
+                    style={
+                      { "--value": seekable ? `${(elapsed / duration) * 100}%` : "100%" } as React.CSSProperties
+                    }
+                  />
+                  <span className="numeric">{seekable ? formatTime(duration) : "LIVE"}</span>
+                </label>
               </div>
             ) : null}
 
