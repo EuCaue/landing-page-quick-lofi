@@ -26,7 +26,7 @@ export default async function OpengraphImage() {
         <img src={`data:image/svg+xml;base64,${logo}`} width={128} height={128} alt="" />
         <div style={{ fontSize: 84, fontWeight: 700, letterSpacing: -2 }}>Quick Lofi</div>
         <div style={{ fontSize: 40, color: "rgba(255,255,255,0.7)" }}>
-          Lofi in your GNOME top bar. GNOME 46 to 50.
+          Lofi in your GNOME top bar. GNOME 45 to 50.
         </div>
         <div style={{ display: "flex", height: 10, width: 160, borderRadius: 5, background: "#2190a4" }} />
       </div>

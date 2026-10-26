@@ -9,7 +9,7 @@ import { SITE_URL } from "@/lib/site-url";
 import { LINKS, RELEASE } from "@/content/site";
 
 const description =
-  "A GNOME Shell extension that plays lofi radio and local audio from the top bar. Works with GNOME 46 to 50.";
+  "A GNOME Shell extension that plays lofi radio and local audio from the top bar. Works with GNOME 45 to 50.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

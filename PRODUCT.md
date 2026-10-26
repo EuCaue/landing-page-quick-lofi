@@ -34,7 +34,7 @@ Confirmed from the extension repository (v1.8.0, May 2026) and extensions.gnome.
 - Advanced: custom mpv arguments, cookies from a browser for restricted streams.
 - Debug logging for troubleshooting.
 - Requires `mpv` (dnf / apt / pacman / zypper).
-- Supports GNOME Shell 46, 47, 48, 49, 50.
+- Supports GNOME Shell 45, 46, 47, 48, 49, 50.
 - Install via extensions.gnome.org (browser integration or Extension Manager), release zip with `gnome-extensions install`, or from source with Node/npm.
 - License: GPL-3.0. Repository: github.com/EuCaue/gnome-shell-extension-quick-lofi. Author: Cauê Souza (EuCaue). Donations: ko-fi.com/eucaue.
 

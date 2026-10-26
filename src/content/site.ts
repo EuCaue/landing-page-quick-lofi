@@ -29,7 +29,7 @@ export const LINKS = {
 
 export const RELEASE = {
   version: "1.8.0",
-  shellVersions: ["46", "47", "48", "49", "50"],
+  shellVersions: ["45", "46", "47", "48", "49", "50"],
   /** extensions.gnome.org download count, October 2026. */
   downloads: "10,000+",
   license: "GPL-3.0",
